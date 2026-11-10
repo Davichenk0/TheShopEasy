@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">ShopEasy</string>
+    <string name="welcome_text">Welcome to ShopEasy</string>
+    <string name="mensaje_inicio">Welcome to ShopEasy</string>
+    <string name="login">LOGIN</string>
+    <string name="forgot_your_password">Forgot your password</string>
+    <string name="register"><u>Register</u></string>
+    <string name="email">ejemplo@ejemplo.com</string>
+    <string name="password">password</string>
+    <string name="recover_password"><u>Recover password</u></string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="sign_in">Sign in</string>
+    <string name="names">Names</string>
+    <string name="last_name">Last Name</string>
+    <string name="email_reg">Email</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="terms_and_conditions">Terms and conditions</string>
+    <string name="you_already_have_an_account"><u>You already have an account? Log in</u></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_store">My store</string>
+    <string name="search">Search</string>
+    <string name="catalog">Catalog</string>
+    <string name="shopping_cart">Shopping cart</string>
+    <string name="profile">Profile</string>
+    <string name="favorites">Favorites</string>
+    <string name="admin">Admin</string>
+    <string name="users">users</string>
+    <string name="logout">Logout</string>
+    <string name="navegation_drawer_open">Menu is open</string>
+    <string name="navegation_drawer_close">Menu is close</string>
+    <string name="featured_products">Featured Products</string>
+    <string name="products">Products</string>
+    <string name="product_image">Product image</string>
+    <string name="profile_image">Profile image</string>
+</resources>

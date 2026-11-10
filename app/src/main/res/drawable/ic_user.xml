@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Cabeza del Usuario (Centrada en X=12, Y=8) -->
+    <path
+        android:fillColor="@color/orange"
+        android:pathData="M12,12
+                          a4,4 0 1,0 0,-8
+                          a4,4 0 1,0 0,8z"/>
+
+    <!-- Cuerpo del Usuario (Centrado en X=12) -->
+    <path
+        android:fillColor="@color/orange"
+        android:pathData="M4,20
+                          c0,-4 4,-6 8,-6
+                          s8,2 8,6z"/>
+
+</vector>
