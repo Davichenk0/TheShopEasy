@@ -69,7 +69,7 @@ class CatalogFragment : Fragment() {
                     productList.clear()
                     productList.addAll(devices.map { device ->
                         Product(
-                            id = null, 
+                            id = device.id?.toLong(), 
                             name = device.name ?: "Unknown",
                             price = device.price ?: 0.0,
                             img_url = device.imageURL ?: ""
@@ -138,6 +138,17 @@ class CatalogFragment : Fragment() {
     }
 
     private fun deleteProduct(product: Product) {
-        Toast.makeText(requireContext(), "Delete not implemented: Missing ID", Toast.LENGTH_SHORT).show()
+        val id = product.id?.toInt() ?: return
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val response = deviceRepository.deleteDevice(id)
+                if (response.isSuccessful) {
+                    Toast.makeText(requireContext(), "Producto eliminado", Toast.LENGTH_SHORT).show()
+                    fetchProducts()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Error al eliminar: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

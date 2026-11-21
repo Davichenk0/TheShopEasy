@@ -14,11 +14,12 @@ import com.example.shopeasy.R
 import com.example.shopeasy.ui.main.products.SearchFragment
 import com.example.shopeasy.ui.main.admin.AdminFragment
 import com.example.shopeasy.ui.main.admin.UsersFragment
+import com.example.shopeasy.ui.main.orders.OrderHistoryFragment
 import com.example.shopeasy.ui.main.products.CatalogFragment
 import com.example.shopeasy.ui.main.products.HomeFragment
 import com.example.shopeasy.ui.main.products.ProductsFragment
 import com.example.shopeasy.ui.main.profile.ProfileFragment
-import com.example.shopeasy.ui.main.products.ShoppingCardFragment
+import com.example.shopeasy.ui.main.cart.ShoppingCardFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_catalog -> cargarFragment(fragment = CatalogFragment())
                 R.id.nav_admin -> cargarFragment(fragment = AdminFragment())
                 R.id.nav_users -> cargarFragment(fragment = UsersFragment())
+                R.id.nav_orders -> cargarFragment(fragment = OrderHistoryFragment())
                 R.id.nav_logout -> finish()
             }
             drawerLayout.closeDrawers()

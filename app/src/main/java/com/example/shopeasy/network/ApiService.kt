@@ -40,7 +40,7 @@ interface ApiService {
     @PUT("Device/{id}")
     suspend fun updateDevice(
         @Path("id") id: Int,
-        @Body deviceData: String
+        @Body device: com.example.shopeasy.data.Device
     ): Response<Unit>
 
     @DELETE("Device/{id}")

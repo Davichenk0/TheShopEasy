@@ -1,0 +1,27 @@
+# Copia este archivo como local.properties y completa las llaves.
+# local.properties NO se versiona: contiene credenciales.
+
+# Ruta del SDK de Android (la agrega Android Studio automáticamente).
+sdk.dir=C\:\\Users\\tu_usuario\\AppData\\Local\\Android\\Sdk
+
+# ---------------------------------------------------------------------------
+# Firebase (Firestore + Authentication anónima)
+# Los valores se copian de google-services.json. Si quedan vacíos, el carrito
+# y las órdenes usan almacenamiento local (SharedPreferences).
+# ---------------------------------------------------------------------------
+FIREBASE_PROJECT_ID=
+FIREBASE_APP_ID=
+FIREBASE_API_KEY=
+
+# ---------------------------------------------------------------------------
+# ePayco - Dashboard > Integraciones > Llaves API
+# EPAYCO_TEST=true usa el ambiente de pruebas.
+# ---------------------------------------------------------------------------
+EPAYCO_P_CUST_ID_CLIENTE=
+EPAYCO_P_KEY=
+EPAYCO_PUBLIC_KEY=
+EPAYCO_TEST=true
+
+# URL HTTPS del backend que recibe el webhook de confirmación.
+# Opcional en la demo; obligatoria en producción.
+EPAYCO_CONFIRMATION_URL=

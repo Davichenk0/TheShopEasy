@@ -32,6 +32,29 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         fetchProductsFromSupabase()
     }
 
+    /**
+     * Convierte el valor almacenado en `img_url` en una URL válida.
+     * Soporta URLs completas (incluso si vienen envueltas en markdown tipo `[url](url)`)
+     * y rutas relativas dentro del bucket de Supabase Storage.
+     */
+    private fun resolveImageUrl(raw: String?): String {
+        val value = raw?.trim().orEmpty()
+        if (value.isEmpty()) return ""
+
+        val url = URL_REGEX.find(value)?.value?.trimEnd('.', ',', ';')
+        if (!url.isNullOrEmpty()) return url
+
+        // Quita corchetes, paréntesis o comillas que se hayan pegado por error.
+        val path = value.trim('[', ']', '(', ')', ' ', '"', '\'')
+        if (path.isEmpty()) return ""
+
+        return SupabaseClient.client.storage.from("fruits").publicUrl(path)
+    }
+
+    private companion object {
+        val URL_REGEX = Regex("""https?://[^\s\]\)]+""")
+    }
+
     private fun fetchProductsFromSupabase() {
         progressBar.visibility = View.VISIBLE
 
@@ -45,20 +68,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 Log.d("SupabaseDebug", "Productos encontrados: ${productsFromSupabase.size}")
 
                 val updatedProducts = productsFromSupabase.map { product ->
-                    val imgPath = product.img_url?.trim() ?: ""
-                    
-                    Log.d("SupabaseImages", "imgPath original para ${product.name}: '$imgPath'")
-
-                    val finalUrl = if (imgPath.startsWith("http", ignoreCase = true)) {
-                        imgPath
-                    } else if (imgPath.isNotEmpty()) {
-                        SupabaseClient.client.storage.from("fruits").publicUrl(imgPath)
-                    } else {
-                        ""
-                    }
-                    
-                    Log.d("SupabaseImages", "URL final para ${product.name}: $finalUrl")
-                    
+                    val finalUrl = resolveImageUrl(product.img_url)
+                    Log.d("SupabaseImages", "URL para ${product.name}: $finalUrl")
                     product.copy(img_url = finalUrl)
                 }
 
@@ -66,7 +77,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 listProducts.addAll(updatedProducts)
 
                 if (!::adapter.isInitialized) {
-                    adapter = ProductAdapter(listProducts)
+                    adapter = ProductAdapter(listProducts) { product ->
+                        addProductToCart(product, "fruit")
+                    }
                     recyclerView.adapter = adapter
                 } else {
                     adapter.updateList(listProducts)

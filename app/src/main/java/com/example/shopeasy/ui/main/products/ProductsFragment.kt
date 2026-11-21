@@ -40,7 +40,9 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
                     .decodeList<Product>()
 
                 // 3. Enviamos los datos al adaptador
-                adapter = ProductAdapter(listaCelulares)
+                adapter = ProductAdapter(listaCelulares) { product ->
+                    addProductToCart(product, "phone")
+                }
                 recyclerView.adapter = adapter
 
             } catch (e: Exception) {

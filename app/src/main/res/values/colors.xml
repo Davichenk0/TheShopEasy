@@ -5,4 +5,9 @@
     <color name="blue">#346DBB</color>
     <color name="orange">#FF5722</color>
     <color name="background">#453E3E</color>
+    <color name="gray">#757575</color>
+    <color name="light_gray">#EEEEEE</color>
+    <color name="payment_success">#2E7D32</color>
+    <color name="payment_error">#C62828</color>
+    <color name="payment_pending">#EF6C00</color>
 </resources>

@@ -27,7 +27,7 @@ class DeviceRepository(private val context: Context) {
         brandId: RequestBody
     ): Response<Unit> = apiService.createDevice(name, price, description, imagen, imageUrl, categoryId, brandId)
 
-    suspend fun updateDevice(id: Int, deviceData: String): Response<Unit> = apiService.updateDevice(id, deviceData)
+    suspend fun updateDevice(id: Int, device: Device): Response<Unit> = apiService.updateDevice(id, device)
 
     suspend fun deleteDevice(id: Int): Response<Unit> = apiService.deleteDevice(id)
 

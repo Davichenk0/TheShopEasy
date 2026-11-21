@@ -4,9 +4,11 @@ import com.google.gson.annotations.SerializedName
 import java.util.UUID
 
 data class Device(
+    @SerializedName("id") val id: Int? = null,
     @SerializedName("name") val name: String?,
     @SerializedName("price") val price: Double?,
-    @SerializedName("imageURL") val imageURL: String?
+    @SerializedName("imageURL") val imageURL: String?,
+    @SerializedName("description") val description: String? = null
 )
 
 data class Brand(

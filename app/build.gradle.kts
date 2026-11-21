@@ -1,9 +1,24 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.kapt)
 }
+
+// Las llaves se leen de local.properties (archivo ignorado por git).
+val localProperties = Properties().apply {
+    val file = rootProject.file("local.properties")
+    if (file.exists()) file.inputStream().use { load(it) }
+}
+
+fun localConfig(name: String, default: String = ""): String =
+    localProperties.getProperty(name, default).replace("\"", "\\\"")
+
+fun localBoolean(name: String, default: Boolean): String =
+    (localProperties.getProperty(name, default.toString()).ifBlank { default.toString() })
+        .toBooleanStrictOrNull()?.toString() ?: default.toString()
 
 android {
     namespace = "com.example.shopeasy"
@@ -17,6 +32,18 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Firebase (Firestore + Auth anónima)
+        buildConfigField("String", "FIREBASE_PROJECT_ID", "\"${localConfig("FIREBASE_PROJECT_ID")}\"")
+        buildConfigField("String", "FIREBASE_APP_ID", "\"${localConfig("FIREBASE_APP_ID")}\"")
+        buildConfigField("String", "FIREBASE_API_KEY", "\"${localConfig("FIREBASE_API_KEY")}\"")
+
+        // ePayco (Standard Checkout)
+        buildConfigField("String", "EPAYCO_P_CUST_ID_CLIENTE", "\"${localConfig("EPAYCO_P_CUST_ID_CLIENTE")}\"")
+        buildConfigField("String", "EPAYCO_P_KEY", "\"${localConfig("EPAYCO_P_KEY")}\"")
+        buildConfigField("String", "EPAYCO_PUBLIC_KEY", "\"${localConfig("EPAYCO_PUBLIC_KEY")}\"")
+        buildConfigField("String", "EPAYCO_CONFIRMATION_URL", "\"${localConfig("EPAYCO_CONFIRMATION_URL")}\"")
+        buildConfigField("boolean", "EPAYCO_TEST", localBoolean("EPAYCO_TEST", true))
     }
 
     buildTypes {
@@ -34,6 +61,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -74,4 +104,9 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.supabase.storage)
 
+    // Carrito y órdenes en Firestore
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
+    implementation(libs.coroutines.play.services)
 }

@@ -11,6 +11,7 @@
     <uses-feature android:name="android.hardware.fingerprint" android:required="false" />
 
     <application
+        android:name=".ShopEasyApp"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -34,6 +35,10 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.payment.PaymentActivity"
+            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity
             android:name=".ui.inicio.SplashActivity"
             android:exported="true">

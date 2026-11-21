@@ -33,4 +33,77 @@
     <string name="products">Products</string>
     <string name="product_image">Product image</string>
     <string name="profile_image">Profile image</string>
+
+    <!-- Carrito -->
+    <string name="cart_title">Mi carrito</string>
+    <string name="cart_clear">Vaciar</string>
+    <string name="cart_empty">Tu carrito está vacío</string>
+    <string name="cart_empty_hint">Agrega productos para continuar con tu compra.</string>
+    <string name="cart_explore">Explorar productos</string>
+    <string name="cart_items_count">%1$d producto(s)</string>
+    <string name="cart_subtotal">Subtotal</string>
+    <string name="cart_total">Total</string>
+    <string name="cart_checkout">Pagar con ePayco</string>
+    <string name="cart_secure_note">Pago seguro procesado por ePayco.</string>
+    <string name="cart_remove">Eliminar</string>
+    <string name="cart_product_image">Imagen del producto</string>
+    <string name="cart_product_removed">Producto eliminado del carrito</string>
+    <string name="cart_added">Producto agregado al carrito</string>
+    <string name="cart_add_error">No se pudo agregar el producto al carrito.</string>
+    <string name="cart_add_error_detail">No se pudo agregar el producto: %1$s</string>
+    <string name="cart_clear_confirm_title">Vaciar carrito</string>
+    <string name="cart_clear_confirm_message">¿Eliminar todos los productos del carrito?</string>
+    <string name="cart_clear_action">Vaciar</string>
+    <string name="cart_load_error">No se pudo cargar el carrito: %1$s</string>
+    <string name="action_cancel">Cancelar</string>
+
+    <!-- Órdenes -->
+    <string name="my_orders">Mis pedidos</string>
+    <string name="orders_title">Mis pedidos</string>
+    <string name="orders_empty">Aún no tienes pedidos</string>
+    <string name="orders_empty_hint">Tus compras aparecerán aquí.</string>
+    <string name="orders_load_error">No se pudieron cargar los pedidos: %1$s</string>
+    <string name="order_number">Pedido #%1$s</string>
+    <string name="order_total">Total</string>
+    <string name="order_items">Productos</string>
+    <string name="order_payment_info">Información del pago</string>
+    <string name="order_payment_ref">Referencia ePayco</string>
+    <string name="order_payment_transaction">Transacción</string>
+    <string name="order_payment_approval">Autorización</string>
+    <string name="order_payment_method">Franquicia</string>
+    <string name="order_payment_empty">—</string>
+    <string name="order_not_found">No se encontró el pedido.</string>
+    <string name="order_pay_now">Pagar ahora</string>
+    <string name="order_cancel">Cancelar pedido</string>
+    <string name="order_cancel_confirm_title">Cancelar pedido</string>
+    <string name="order_cancel_confirm">¿Cancelar este pedido?</string>
+    <string name="order_delete">Eliminar del historial</string>
+    <string name="order_delete_confirm_title">Eliminar pedido</string>
+    <string name="order_delete_confirm">¿Eliminar este pedido del historial? Esta acción no se puede deshacer.</string>
+    <string name="order_cancelled_toast">Pedido cancelado</string>
+    <string name="order_deleted_toast">Pedido eliminado</string>
+    <string name="order_action_error">No se pudo completar la acción: %1$s</string>
+    <string name="order_quantity">x%1$d</string>
+    <string name="order_item_count">%1$d artículo(s)</string>
+
+    <!-- Pasarela de pagos -->
+    <string name="payment_title">Pago seguro</string>
+    <string name="payment_loading">Cargando pasarela de pago…</string>
+    <string name="payment_confirming">Confirmando transacción…</string>
+    <string name="payment_order_not_found">No se encontró el pedido.</string>
+    <string name="payment_not_configured">ePayco no está configurado. Agrega las llaves en local.properties.</string>
+    <string name="payment_error">No se pudo iniciar el pago.</string>
+    <string name="payment_webview_error">No se pudo cargar ePayco. Revisa tu conexión a internet.</string>
+    <string name="payment_confirmation_error">No se pudo confirmar la transacción: %1$s. Revisa el estado en Mis pedidos antes de intentar de nuevo.</string>
+    <string name="payment_approved">Pago aprobado</string>
+    <string name="payment_pending">Pago pendiente</string>
+    <string name="payment_cancelled">Pago cancelado</string>
+    <string name="payment_rejected">Pago rechazado</string>
+    <string name="payment_error_title">Error en el pago</string>
+    <string name="payment_approved_message">¡Gracias por tu compra! Tu pedido fue registrado.</string>
+    <string name="payment_result_message">La transacción no fue aprobada. Puedes reintentar desde Mis pedidos.</string>
+    <string name="payment_close">Volver a la tienda</string>
+    <string name="payment_success_toast">Pago aprobado. Revisa tu historial de pedidos.</string>
+    <string name="payment_config_title">Configura ePayco</string>
+    <string name="payment_config_message">Agrega EPAYCO_P_CUST_ID_CLIENTE y EPAYCO_P_KEY en local.properties para habilitar la pasarela.</string>
 </resources>

@@ -20,6 +20,7 @@ import com.example.shopeasy.R
 import com.example.shopeasy.SupabaseClient
 import com.example.shopeasy.data.UserRepository
 import com.example.shopeasy.ui.auth.LoginActivity
+import com.example.shopeasy.ui.main.orders.OrderHistoryFragment
 import io.github.jan.supabase.auth.auth
 import kotlinx.coroutines.launch
 
@@ -77,6 +78,12 @@ class ProfileFragment : Fragment() {
                 7 -> { // Change Password
                     parentFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container, ChangePasswordFragment())
+                        .addToBackStack(null)
+                        .commit()
+                }
+                4 -> { // My Orders
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, OrderHistoryFragment())
                         .addToBackStack(null)
                         .commit()
                 }

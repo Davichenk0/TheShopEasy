@@ -4,14 +4,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.shopeasy.R
+import com.example.shopeasy.ui.common.asCurrency
 
-class ProductAdapter(private var productList: List<Product>) :
-    RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(
+    private var productList: List<Product>,
+    private val onAddToCart: (Product) -> Unit = {}
+) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     fun updateList(newList: List<Product>) {
         productList = newList
@@ -22,6 +26,7 @@ class ProductAdapter(private var productList: List<Product>) :
         val imgProduct: ImageView = view.findViewById(R.id.img_product)
         val txtName: TextView = view.findViewById(R.id.tv_name)
         val txtPrice: TextView = view.findViewById(R.id.tv_price)
+        val btnAddCart: Button = view.findViewById(R.id.btn_add_cart)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -33,35 +38,15 @@ class ProductAdapter(private var productList: List<Product>) :
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = productList[position]
         holder.txtName.text = product.name
-        holder.txtPrice.text = "$${product.price}"
+        holder.txtPrice.text = (product.price ?: 0.0).asCurrency()
+        holder.btnAddCart.setOnClickListener { onAddToCart(product) }
 
         Log.d("Glide_Debug", "Loading image: ${product.img_url}")
 
         Glide.with(holder.itemView.context)
             .load(product.img_url)
-            .listener(object : com.bumptech.glide.request.RequestListener<android.graphics.drawable.Drawable> {
-                override fun onLoadFailed(
-                    e: com.bumptech.glide.load.engine.GlideException?,
-                    model: Any?,
-                    target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    Log.e("Glide_Debug", "Error loading image: ${e?.message} for URL: ${product.img_url}")
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: android.graphics.drawable.Drawable,
-                    model: Any,
-                    target: com.bumptech.glide.request.target.Target<android.graphics.drawable.Drawable>?,
-                    dataSource: com.bumptech.glide.load.DataSource,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    return false
-                }
-            })
-            .placeholder(android.R.drawable.progress_horizontal)
-            .error(android.R.drawable.stat_notify_error)
+            .placeholder(R.drawable.logo1)
+            .error(R.drawable.logo2)
             .into(holder.imgProduct)
     }
 
