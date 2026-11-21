@@ -105,26 +105,40 @@ class CatalogFragment : Fragment() {
 
                 if (name.isNotEmpty() && priceStr.isNotEmpty()) {
                     val price = priceStr.toDoubleOrNull() ?: 0.0
-                    saveProduct(name, price, description, imageUrl)
+                    saveProduct(product?.id, name, price, description, imageUrl)
                 }
             }
             .setNegativeButton("Cancelar", null)
             .show()
     }
 
-    private fun saveProduct(name: String, price: Double, description: String, imageUrl: String) {
-        val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
-        val priceBody = price.toString().toRequestBody("text/plain".toMediaTypeOrNull())
-        val descBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
-        val urlBody = imageUrl.toRequestBody("text/plain".toMediaTypeOrNull())
-        val categoryBody = "1".toRequestBody("text/plain".toMediaTypeOrNull())
-        val brandBody = "1".toRequestBody("text/plain".toMediaTypeOrNull())
-
+    private fun saveProduct(id: Long?, name: String, price: Double, description: String, imageUrl: String) {
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                val response = deviceRepository.createDevice(
-                    nameBody, priceBody, descBody, null, urlBody, categoryBody, brandBody
-                )
+                val response = if (id == null) {
+                    // CREAR (POST Multipart)
+                    val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val priceBody = price.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+                    val descBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val urlBody = imageUrl.toRequestBody("text/plain".toMediaTypeOrNull())
+                    val categoryBody = "1".toRequestBody("text/plain".toMediaTypeOrNull())
+                    val brandBody = "1".toRequestBody("text/plain".toMediaTypeOrNull())
+                    
+                    deviceRepository.createDevice(
+                        nameBody, priceBody, descBody, null, urlBody, categoryBody, brandBody
+                    )
+                } else {
+                    // EDITAR (PUT JSON)
+                    val deviceUpdate = com.example.shopeasy.data.Device(
+                        id = id.toInt(),
+                        name = name,
+                        price = price,
+                        imageURL = imageUrl,
+                        description = description
+                    )
+                    deviceRepository.updateDevice(id.toInt(), deviceUpdate)
+                }
+
                 if (response.isSuccessful) {
                     Toast.makeText(requireContext(), "Guardado con éxito", Toast.LENGTH_SHORT).show()
                     fetchProducts()
