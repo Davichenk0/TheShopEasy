@@ -12,44 +12,53 @@ import com.example.shopeasy.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
 
+import com.example.shopeasy.data.DeviceRepository
+
 class ProductsFragment : Fragment(R.layout.fragment_products) {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
     private lateinit var adapter: ProductAdapter
+    private lateinit var deviceRepository: DeviceRepository
 
     override fun onViewCreated(view: View, bundle: Bundle?) {
         super.onViewCreated(view, bundle)
-
-        // 1. Enlazamos los IDs exactos de tu archivo fragment_products.xml
+        
+        deviceRepository = DeviceRepository(requireContext())
         recyclerView = view.findViewById(R.id.rv_products)
         progressBar = view.findViewById(R.id.pb_loading)
 
-        obtenerCelularesDesdeSupabase()
+        fetchDevicesFromApi()
     }
 
-    private fun obtenerCelularesDesdeSupabase() {
-        // Mostramos la barra de carga antes de iniciar la petición
+    private fun fetchDevicesFromApi() {
         progressBar.visibility = View.VISIBLE
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
-                // 2. Hacemos la consulta a la tabla 'phones' en Supabase
-                val listaCelulares = SupabaseClient.client.postgrest["phones"]
-                    .select()
-                    .decodeList<Product>()
-
-                // 3. Enviamos los datos al adaptador
-                adapter = ProductAdapter(listaCelulares) { product ->
-                    addProductToCart(product, "phone")
+                val response = deviceRepository.getDevices()
+                if (response.isSuccessful) {
+                    val devices = response.body() ?: emptyList()
+                    val products = devices.map { device ->
+                        Product(
+                            id = device.id?.toLong(),
+                            name = device.name ?: "Dispositivo",
+                            price = device.price ?: 0.0,
+                            img_url = device.imageURL ?: ""
+                        )
+                    }
+                    
+                    adapter = ProductAdapter(products) { product ->
+                        // Aquí iría la lógica para añadir al carrito
+                        Toast.makeText(requireContext(), "${product.name} añadido", Toast.LENGTH_SHORT).show()
+                    }
+                    recyclerView.adapter = adapter
+                } else {
+                    Toast.makeText(requireContext(), "Error API: ${response.code()}", Toast.LENGTH_SHORT).show()
                 }
-                recyclerView.adapter = adapter
-
             } catch (e: Exception) {
-                e.printStackTrace()
-                Toast.makeText(requireContext(), "Error al conectar con Supabase", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error de conexión: ${e.message}", Toast.LENGTH_SHORT).show()
             } finally {
-                // 4. Ocultamos el cargador tanto si funcionó como si falló
                 progressBar.visibility = View.GONE
             }
         }
